@@ -2747,11 +2747,10 @@ end;
 
 procedure InternalExecuteReadPipe(var PipeInfo: TPipeInfo; var Overlapped: TOverlapped);
 var
-  NullDWORD: PDWORD;
+  NumberOfBytesRead: DWORD;
   Res: DWORD;
 begin
-  NullDWORD := nil;
-  if not ReadFile(PipeInfo.PipeRead, PipeInfo.Buffer[0], BufferSize, NullDWORD^, @Overlapped) then
+  if not ReadFile(PipeInfo.PipeRead, PipeInfo.Buffer[0], BufferSize, NumberOfBytesRead, @Overlapped) then
   begin
     Res := GetLastError;
     if Res = ERROR_BROKEN_PIPE then

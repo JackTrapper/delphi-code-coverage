@@ -32,7 +32,7 @@ uses
   {$IFDEF UNITVERSIONING}
   JclUnitVersioning,
   {$ENDIF UNITVERSIONING}
-  SysUtils, Classes, Forms, Controls, Graphics, Windows, TypInfo;
+  SysUtils, Classes, Vcl.Forms, Vcl.Controls, Vcl.Graphics, Windows, TypInfo;
 
 const
   { JvEditor }

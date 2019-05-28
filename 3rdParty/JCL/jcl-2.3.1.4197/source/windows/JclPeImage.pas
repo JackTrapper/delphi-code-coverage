@@ -1113,7 +1113,8 @@ uses
   Character,
   {$ENDIF HAS_UNIT_CHARACTER}
   {$ENDIF ~HAS_UNITSCOPE}
-  JclLogic, JclResources, JclSysUtils, JclStrings, JclStringConversions;
+  JclLogic, JclResources, JclSysUtils, JclStrings, JclStringConversions,
+  System.Types, System.AnsiStrings;
 
 const
   MANIFESTExtension = '.manifest';
@@ -5181,7 +5182,7 @@ function PeInsertSection(const FileName: TFileName; SectionStream: TStream; Sect
       // JCLDEBUG Section name
       if not TryStringToUTF8(SectionName, UTF8Name) then
         UTF8Name := TUTF8String(SectionName);
-      StrPLCopy(PAnsiChar(@NewSection^.Name), UTF8Name, IMAGE_SIZEOF_SHORT_NAME);
+      System.AnsiStrings.StrPLCopy(PAnsiChar(@NewSection^.Name), UTF8Name, IMAGE_SIZEOF_SHORT_NAME);
       // JCLDEBUG Characteristics flags
       NewSection^.Characteristics := IMAGE_SCN_MEM_READ or IMAGE_SCN_CNT_INITIALIZED_DATA;
 
@@ -5252,7 +5253,7 @@ function PeInsertSection(const FileName: TFileName; SectionStream: TStream; Sect
       // JCLDEBUG Section name
       if not TryStringToUTF8(SectionName, UTF8Name) then
         UTF8Name := TUTF8String(SectionName);
-      StrPLCopy(PAnsiChar(@NewSection^.Name), UTF8Name, IMAGE_SIZEOF_SHORT_NAME);
+      System.AnsiStrings.StrPLCopy(PAnsiChar(@NewSection^.Name), UTF8Name, IMAGE_SIZEOF_SHORT_NAME);
       // JCLDEBUG Characteristics flags
       NewSection^.Characteristics := IMAGE_SCN_MEM_READ or IMAGE_SCN_CNT_INITIALIZED_DATA;
 
@@ -6043,7 +6044,7 @@ begin
     P := PAnsiChar(UTF8Name);
     Header := PeMapImgSections32(NtHeaders);
     for I := 1 to NtHeaders^.FileHeader.NumberOfSections do
-      if StrLComp(PAnsiChar(@Header^.Name), P, IMAGE_SIZEOF_SHORT_NAME) = 0 then
+      if System.AnsiStrings.StrLComp(PAnsiChar(@Header^.Name), P, IMAGE_SIZEOF_SHORT_NAME) = 0 then
       begin
         Result := Header;
         Break;
@@ -6069,7 +6070,7 @@ begin
     P := PAnsiChar(UTF8Name);
     Header := PeMapImgSections64(NtHeaders);
     for I := 1 to NtHeaders^.FileHeader.NumberOfSections do
-      if StrLComp(PAnsiChar(@Header^.Name), P, IMAGE_SIZEOF_SHORT_NAME) = 0 then
+      if System.AnsiStrings.StrLComp(PAnsiChar(@Header^.Name), P, IMAGE_SIZEOF_SHORT_NAME) = 0 then
       begin
         Result := Header;
         Break;
@@ -6091,7 +6092,7 @@ begin
       UTF8Name := TUTF8String(SectionName);
     P := PAnsiChar(UTF8Name);
     for Result := Low(ImageSectionHeaders) to High(ImageSectionHeaders) do
-      if StrLComp(PAnsiChar(@ImageSectionHeaders[Result].Name), P, IMAGE_SIZEOF_SHORT_NAME) = 0 then
+      if System.AnsiStrings.StrLComp(PAnsiChar(@ImageSectionHeaders[Result].Name), P, IMAGE_SIZEOF_SHORT_NAME) = 0 then
         Exit;
   end;
   Result := -1;
@@ -6415,7 +6416,7 @@ begin
   while ImportDesc^.Name <> 0 do
   begin
     CurrName := PAnsiChar(Base) + ImportDesc^.Name;
-    if StrIComp(CurrName, RefName) = 0 then
+    if System.AnsiStrings.StrIComp(CurrName, RefName) = 0 then
     begin
       ImportEntry32 := PImageThunkData32(TJclAddr(Base) + ImportDesc^.FirstThunk);
       while ImportEntry32^.Function_ <> 0 do
@@ -6581,7 +6582,7 @@ var
 
   procedure ReadRTTI;
   begin
-    if StrLComp(NameP, '$xp$', 4) = 0 then
+    if System.AnsiStrings.StrLComp(NameP, '$xp$', 4) = 0 then
     begin
       Inc(NameP, 4);
       Description.Kind := skRTTI;
@@ -6693,7 +6694,7 @@ begin
     Result := urError;
   end;
   NameU^ := #0;
-  SetLength(UTF8Unmangled, {$IFDEF HAS_UNITSCOPE}System.{$ENDIF}SysUtils.StrLen(PAnsiChar(UTF8Unmangled))); // SysUtils prefix due to compiler bug
+  SetLength(UTF8Unmangled, {$IFDEF HAS_UNITSCOPE}System.{$ENDIF}AnsiStrings.StrLen(PAnsiChar(UTF8Unmangled))); // SysUtils prefix due to compiler bug
   if not TryUTF8ToString(UTF8Unmangled, Unmangled) then
     Unmangled := string(UTF8Unmangled);
 end;

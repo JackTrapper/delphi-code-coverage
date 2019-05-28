@@ -624,7 +624,8 @@ uses
   JclStrings,
   JclUnicode,
   JclStringConversions,
-  JclResources;
+  JclResources,
+  System.Types;
 
 const
   cBufferSize = 8192;
