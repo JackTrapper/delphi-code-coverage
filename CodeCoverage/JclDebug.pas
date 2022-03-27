@@ -1062,7 +1062,7 @@ uses
   JclRegistry,
   {$ENDIF MSWINDOWS}
   JclHookExcept, JclStrings, JclSysInfo, JclSysUtils, JclWin32,
-  JclStringConversions, JclResources;
+  JclStringConversions, JclResources, System.Types, AnsiStrings;
 
 //=== Helper assembler routines ==============================================
 
@@ -1354,8 +1354,8 @@ begin
   PExtension := PEnd;
   while (PExtension >= MapString) and (PExtension^ <> '.') and (PExtension^ <> '|') do
     Dec(PExtension);
-  if (StrLIComp(PExtension, '.pas ', 5) = 0) or
-     (StrLIComp(PExtension, '.obj ', 5) = 0) then
+  if (AnsiStrings.StrLIComp(PExtension, '.pas ', 5) = 0) or
+     (AnsiStrings.StrLIComp(PExtension, '.obj ', 5) = 0) then
     PEnd := PExtension;
   PExtension := PEnd;
   while (PExtension >= MapString) and (PExtension^ <> '|') and (PExtension^ <> '\') do
@@ -1759,7 +1759,7 @@ begin
   FSegmentClasses[C].Start := Address.Offset;
   FSegmentClasses[C].Addr := Address.Offset; // will be fixed below while considering module mapped address
   // test GroupName because SectionName = '.tls' in Delphi and '_tls' in BCB
-  if StrLIComp(GroupName, 'TLS', 3) = 0 then
+  if AnsiStrings.StrLIComp(GroupName, 'TLS', 3) = 0 then
     FSegmentClasses[C].VA := FSegmentClasses[C].Start
   else
     FSegmentClasses[C].VA := MAPAddrToVA(FSegmentClasses[C].Start);
@@ -1822,7 +1822,7 @@ begin
     if (FSegmentClasses[SegIndex].Segment = Address.Segment)
       and (DWORD(Address.Offset) < FSegmentClasses[SegIndex].Len) then
   begin
-    if StrLIComp(FSegmentClasses[SegIndex].GroupName.RawValue, 'TLS', 3) = 0 then
+    if AnsiStrings.StrLIComp(FSegmentClasses[SegIndex].GroupName.RawValue, 'TLS', 3) = 0 then
       Va := Address.Offset
     else
       VA := MAPAddrToVA(Address.Offset + FSegmentClasses[SegIndex].Start);
@@ -1962,7 +1962,7 @@ begin
         SetLength(FProcNames, FProcNamesCnt * 2);
     end;
     FProcNames[FProcNamesCnt].Segment := FSegmentClasses[SegIndex].Segment;
-    if StrLIComp(FSegmentClasses[SegIndex].GroupName.RawValue, 'TLS', 3) = 0 then
+    if AnsiStrings.StrLIComp(FSegmentClasses[SegIndex].GroupName.RawValue, 'TLS', 3) = 0 then
       FProcNames[FProcNamesCnt].VA := Address.Offset
     else
       FProcNames[FProcNamesCnt].VA := MAPAddrToVA(Address.Offset + FSegmentClasses[SegIndex].Start);
@@ -2012,7 +2012,7 @@ begin
     if (FSegmentClasses[SegIndex].Segment = Address.Segment)
       and (DWORD(Address.Offset) < FSegmentClasses[SegIndex].Len) then
   begin
-    if StrLIComp(FSegmentClasses[SegIndex].GroupName.RawValue, 'TLS', 3) = 0 then
+    if AnsiStrings.StrLIComp(FSegmentClasses[SegIndex].GroupName.RawValue, 'TLS', 3) = 0 then
       VA := Address.Offset
     else
       VA := MAPAddrToVA(Address.Offset + FSegmentClasses[SegIndex].Start);
@@ -2360,7 +2360,7 @@ begin
         JclDebugSection.PointerToRawData := LastSection^.PointerToRawData + LastSection^.SizeOfRawData;
         RoundUpToAlignment(JclDebugSection.PointerToRawData, NtHeaders32.OptionalHeader.FileAlignment);
         // JCLDEBUG Section name
-        StrPLCopy(PAnsiChar(@JclDebugSection.Name), JclDbgDataResName, IMAGE_SIZEOF_SHORT_NAME);
+        AnsiStrings.StrPLCopy(PAnsiChar(@JclDebugSection.Name), JclDbgDataResName, IMAGE_SIZEOF_SHORT_NAME);
         // JCLDEBUG Characteristics flags
         JclDebugSection.Characteristics := IMAGE_SCN_MEM_READ or IMAGE_SCN_CNT_INITIALIZED_DATA;
 

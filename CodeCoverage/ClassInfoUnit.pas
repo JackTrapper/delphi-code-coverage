@@ -168,7 +168,8 @@ uses
   StrUtilsD9,
   {$IFEND}
   Classes,
-  uConsoleOutput;
+  uConsoleOutput,
+  System.SysUtils;
 
 {$region 'TModuleList'}
 constructor TModuleList.Create;

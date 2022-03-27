@@ -1418,7 +1418,8 @@ uses
   {$ENDIF MSWINDOWS}
   {$ENDIF ~HAS_UNITSCOPE}
   Jcl8087, JclIniFiles,
-  JclSysUtils, JclFileUtils, JclStrings;
+  JclSysUtils, JclFileUtils, JclStrings,
+  AnsiStrings;
 
 {$IFDEF FPC}
 {$IFDEF MSWINDOWS}
@@ -3750,7 +3751,7 @@ begin
         begin
           { TODO : Store this information in a Global Variable, and return that??
                    This would save this work being performed again with later calls }
-          sOpenGLVersion := StrPas(pcTemp);
+          sOpenGLVersion := AnsiStrings.StrPas(pcTemp);
         end
         else
         begin
@@ -3768,7 +3769,7 @@ begin
         begin
           { TODO : Store this information in a Global Variable, and return that??
                    This would save this work being performed again with later calls }
-          sOpenGLVendor := StrPas(pcTemp);
+          sOpenGLVendor := AnsiStrings.StrPas(pcTemp);
         end
         else
         begin
@@ -4609,7 +4610,7 @@ function CPUID: TCpuInfo;
             11:
               CPUInfo.CpuName := 'Pentium III';
           else
-            StrPCopy(CPUInfo.CpuName, AnsiString(Format('P6 (Model %d)', [CPUInfo.Model])));
+            AnsiStrings.StrPCopy(CPUInfo.CpuName, AnsiString(Format('P6 (Model %d)', [CPUInfo.Model])));
           end;
         15:
           case CPUInfo.IntelSpecific.BrandID of
@@ -4623,7 +4624,7 @@ function CPUID: TCpuInfo;
             CPUInfo.CpuName := 'Pentium 4';
           end;
       else
-        StrPCopy(CPUInfo.CpuName, AnsiString(Format('P%d', [CPUInfo.Family])));
+        AnsiStrings.StrPCopy(CPUInfo.CpuName, AnsiString(Format('P%d', [CPUInfo.Family])));
       end;
     end;
 
@@ -4754,7 +4755,7 @@ function CPUID: TCpuInfo;
             9:
               CPUInfo.CpuName := 'AMD-K6®-III (Model 9)';
             else
-              StrFmt(CPUInfo.CpuName, PAnsiChar(AnsiString(LoadResString(@RsUnknownAMDModel))),[CPUInfo.Model]);
+              AnsiStrings.StrFmt(CPUInfo.CpuName, PAnsiChar(AnsiString(LoadResString(@RsUnknownAMDModel))),[CPUInfo.Model]);
           end;
         6:
           case CPUInfo.Model of
@@ -4775,7 +4776,7 @@ function CPUID: TCpuInfo;
             10:
               CPUInfo.CpuName := 'AMD Athlon™ XP (Model 10)';
             else
-              StrFmt(CPUInfo.CpuName, PAnsiChar(AnsiString(LoadResString(@RsUnknownAMDModel))), [CPUInfo.Model]);
+              AnsiStrings.StrFmt(CPUInfo.CpuName, PAnsiChar(AnsiString(LoadResString(@RsUnknownAMDModel))), [CPUInfo.Model]);
           end;
         8:
 
@@ -4859,7 +4860,7 @@ function CPUID: TCpuInfo;
         6:
           CPUInfo.CpuName := '6x86MX';
       else
-        StrPCopy(CPUInfo.CpuName, AnsiString(Format('%dx86', [CPUInfo.Family])));
+        AnsiStrings.StrPCopy(CPUInfo.CpuName, AnsiString(Format('%dx86', [CPUInfo.Family])));
       end;
     end;
   end;

@@ -1421,7 +1421,8 @@ uses
   {$IFNDEF UNICODE_RAW_DATA}
   JclCompression,
   {$ENDIF ~UNICODE_RAW_DATA}
-  JclResources, JclSynch, JclSysUtils, JclSysInfo, JclStringConversions, JclWideStrings;
+  JclResources, JclSynch, JclSysUtils, JclSysInfo, JclStringConversions, JclWideStrings,
+  System.Types;
 
 const
   {$IFDEF FPC} // declarations from unit [Rtl]Consts

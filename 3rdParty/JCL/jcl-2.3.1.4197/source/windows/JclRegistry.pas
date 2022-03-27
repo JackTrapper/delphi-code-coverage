@@ -387,7 +387,8 @@ uses
   JclSysUtils,
   {$ENDIF ~FPC}
   JclResources, JclWin32, JclSysInfo,
-  JclAnsiStrings, JclWideStrings;
+  JclAnsiStrings, JclWideStrings,
+  AnsiStrings;
 
 type
   TRegKind = REG_NONE..REG_QWORD;
@@ -532,7 +533,7 @@ begin
   if Result^ = RegKeyDelimiter then
     Inc(Result);
   for I := Low(RootKeys) to High(RootKeys) do
-    if StrPos(Key, PAnsiChar(RootKeys[I].AnsiName + RegKeyDelimiter)) = Result then
+    if AnsiStrings.StrPos(Key, PAnsiChar(RootKeys[I].AnsiName + RegKeyDelimiter)) = Result then
     begin
       if RootKey <> RootKeys[I].Key then
         raise EJclRegistryError.CreateResFmt(@RsInconsistentPath, [Key])

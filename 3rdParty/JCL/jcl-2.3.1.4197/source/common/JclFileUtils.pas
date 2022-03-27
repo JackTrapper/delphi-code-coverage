@@ -1082,7 +1082,8 @@ uses
   {$ENDIF MSWINDOWS}
   {$ENDIF ~HAS_UNITSCOPE}
   JclDateTime, JclResources,
-  JclStrings;
+  JclStrings,
+  System.Types;
 
 { Some general notes:
 
